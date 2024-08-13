@@ -63,11 +63,7 @@ export function SearchPage(): ReactElement {
                     If I understand it correctly, it just creates sub-arrays that are at most MAX_ITEMS_PER_PAGE long and displays these
                     with the use of the pagination buttons and variables. Quite clever honestly.*/}
                     {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handlePageChange(index + 1)}
-                            className={index + 1 === currentPage ? 'active' : ''}
-                        >
+                        <button key={index} onClick={() => handlePageChange(index + 1)} className={index + 1 === currentPage ? 'active' : ''}>
                             {index + 1}
                         </button>
                     ))}
