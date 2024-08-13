@@ -1,6 +1,5 @@
 import { MouseEventHandler, ReactElement, useEffect } from "react";
-import { useCoctailLogic } from "../index";
-import { CoctailCard } from "../components/CoctailCard";
+import { useCoctailLogic, CoctailCard } from "../index";
 
 export function LandingPage(): ReactElement {
     const { getRandomDrink, setFocusedCoctail } = useCoctailLogic();
