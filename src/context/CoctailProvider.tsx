@@ -23,7 +23,6 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
     }
 
     function getSearchedDrinks(url: string): Promise<IDrink[]> {
-        console.log("running getSearchedDrinks with URL ", url);
         return fetchData(url).then((drinks: IDrink[]) => {
             const drinkList: IDrink[] = Array.from(drinks);
             return drinkList;
