@@ -11,9 +11,11 @@ export interface IDrink {
 }
 
 export interface ICoctailContext {
-    // getDrinksList: (search:string) => void;
     getRandomDrink: () => Promise<IDrink>;
+    getSearchedDrinks: (url:string) => Promise<IDrink[]>;
     fetchData: (url:string) => Promise<IDrink[]>;
-    setRandomCoctail:(drink:IDrink) => void;
-    randomCoctail: IDrink | undefined;
+    setFocusedCoctail:(drink:IDrink) => void;
+    setCoctailList:(drinks:IDrink[]) => void;
+    focusedCoctail: IDrink | undefined;
+    coctailList:IDrink[];
 }

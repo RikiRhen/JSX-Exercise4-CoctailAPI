@@ -3,11 +3,11 @@ import { useCoctailLogic } from "../hooks/useCoctailLogic";
 import { Link } from "react-router-dom";
 
 export function LandingPage(): ReactElement {
-    const { getRandomDrink, setRandomCoctail, randomCoctail } = useCoctailLogic();
+    const { getRandomDrink, setFocusedCoctail, focusedCoctail } = useCoctailLogic();
 
     const runFetch = async () => {
         const drink = await getRandomDrink();
-        setRandomCoctail(drink);
+        setFocusedCoctail(drink);
     };
 
     useEffect(() => {
@@ -22,10 +22,10 @@ export function LandingPage(): ReactElement {
     return (
         <section className="landingSection">
             <h1>This is the landing page</h1>
-            <img className="thumbnail" src={randomCoctail?.image} alt={randomCoctail?.name} />
-            <p className="randomDrinkName">{randomCoctail?.name}</p>
+            <img className="thumbnail" src={focusedCoctail?.image} alt={focusedCoctail?.name} />
+            <p className="randomDrinkName">{focusedCoctail?.name}</p>
             <button className="btn" id="newDrinkButton" onClick={handleOnClick}>New</button>
-            <Link to="/info" className="link">
+            <Link to="/info" state={{ focusedCoctail }} className="link">
                 Info
             </Link>
         </section>

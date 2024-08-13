@@ -1,37 +1,43 @@
 import { ReactElement } from "react";
-import { useCoctailLogic } from "../hooks/useCoctailLogic";
 import "../css/index.css";
+import { IDrink } from "../interfaces";
+import { useLocation } from "react-router-dom";
+
+interface ICoctailInfoPageProps{
+    focusedCoctail: IDrink | undefined;
+}
 
 export function CoctailInfoPage(): ReactElement {
-    const { randomCoctail } = useCoctailLogic();
+    const location = useLocation();
+    const {focusedCoctail} = location.state as ICoctailInfoPageProps;
 
     return (
         <section className="infoSection">
             <h1>This is the coctail info page</h1>
             <div className="infoBody">
                 <div className="imageDiv">
-                    <img src={randomCoctail?.image} alt={randomCoctail?.name} className="coctailImage" />
+                    <img src={focusedCoctail?.image} alt={focusedCoctail?.name} className="coctailImage" />
                 </div>
                 <div className="infoDiv">
-                    <h1>{randomCoctail?.name}</h1>
+                    <h1>{focusedCoctail?.name}</h1>
                     <div className="extraInfo">
-                        <p>Served in a {randomCoctail?.glass}</p>
-                        <p>Category: {randomCoctail?.category}</p>
-                        <p>Tags: {randomCoctail?.tags.join(", ")}</p>
+                        <p>Served in a {focusedCoctail?.glass}</p>
+                        <p>Category: {focusedCoctail?.category}</p>
+                        <p>Tags: {focusedCoctail?.tags.join(", ")}</p>
                         <div className="ingredients">
                             <ul className="ingredientList">
-                                {randomCoctail?.ingredients.map((ingredient, index) => (
+                                {focusedCoctail?.ingredients.map((ingredient, index) => (
                                     <li className="ingredientName" id={`ingredient-${index}`}>{ingredient}</li>
                                 ))}
                             </ul>
                             <ul className="measurementList">
-                                {randomCoctail?.measures.map((measurement, index) => (
+                                {focusedCoctail?.measures.map((measurement, index) => (
                                     <li className="measurement" id={`measurement-${index}`}>{measurement}</li>
                                 ))}
                             </ul>
                         </div>
                         <h1>Instructions</h1>
-                        <p>{randomCoctail?.instructions}</p>
+                        <p>{focusedCoctail?.instructions}</p>
                     </div>
                 </div>
             </div>

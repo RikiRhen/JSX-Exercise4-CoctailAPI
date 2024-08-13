@@ -9,9 +9,7 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
-    const [randomCoctail, setRandomCoctail] = useState<IDrink>();
-
-    //THINGS TO STORE LOCALLY: 1x Random drink, 1x Array of search results
+    const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
 
     function getRandomDrink(): Promise<IDrink> {
         const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
@@ -22,6 +20,16 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
             console.error(`API error fetching drink: `, error);
             throw error;
         });
+    }
+
+    function getSearchedDrinks(url: string): Promise<IDrink[]> {
+        return fetchData(url).then((drinks: IDrink[]) => {
+            const drinkList: IDrink[] = Array.from(drinks);
+            return drinkList;
+        }).catch((error) => {
+            console.error(`API error fetching searched list: `, error)
+            throw error;
+        })
     }
 
     async function fetchData(url: string): Promise<IDrink[]> {
@@ -85,9 +93,12 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     const values: ICoctailContext = {
         getRandomDrink,
+        getSearchedDrinks,
         fetchData,
-        setRandomCoctail,
-        randomCoctail
+        setFocusedCoctail,
+        setCoctailList,
+        focusedCoctail,
+        coctailList
     }
 
     return <CoctailContext.Provider value={values}>{children}</CoctailContext.Provider>
