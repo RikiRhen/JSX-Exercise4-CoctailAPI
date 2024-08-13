@@ -23,6 +23,7 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
     }
 
     function getSearchedDrinks(url: string): Promise<IDrink[]> {
+        console.log("running getSearchedDrinks with URL ", url);
         return fetchData(url).then((drinks: IDrink[]) => {
             const drinkList: IDrink[] = Array.from(drinks);
             return drinkList;
@@ -34,11 +35,16 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     async function fetchData(url: string): Promise<IDrink[]> {
         try {
+
             const response = await fetch(url);
 
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
+
+            // const responseText = await response.text();
+
+            // const data = JSON.parse(responseText);
 
             const data = await response.json();
 
@@ -86,6 +92,7 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
             return coctails;
 
         } catch (error) {
+            console.log("fetch went to error")
             console.error(error);
             return [];
         }
@@ -104,9 +111,3 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
     return <CoctailContext.Provider value={values}>{children}</CoctailContext.Provider>
 }
 
-// function getDrinksList(search: string): Promise<IDrink[]> {
-//     let url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-//     url = url.concat(search);
-//     console.log(url);
-//     return fetchData(url);
-// }

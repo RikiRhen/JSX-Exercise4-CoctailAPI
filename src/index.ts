@@ -7,3 +7,4 @@ export * from "./pages/SearchPage";
 
 export * from "./router";
 export * from "./interfaces";
+export * from "./hooks/useCoctailLogic";

@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactElement, useEffect } from "react";
-import { useCoctailLogic } from "../hooks/useCoctailLogic";
+import { useCoctailLogic } from "../index";
 import { Link } from "react-router-dom";
 
 export function LandingPage(): ReactElement {

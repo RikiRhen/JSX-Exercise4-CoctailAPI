@@ -3,13 +3,13 @@ import "../css/index.css";
 import { IDrink } from "../interfaces";
 import { useLocation } from "react-router-dom";
 
-interface ICoctailInfoPageProps{
+interface ICoctailInfoPageProps {
     focusedCoctail: IDrink | undefined;
 }
 
 export function CoctailInfoPage(): ReactElement {
     const location = useLocation();
-    const {focusedCoctail} = location.state as ICoctailInfoPageProps;
+    const { focusedCoctail } = location.state as ICoctailInfoPageProps;
 
     return (
         <section className="infoSection">
@@ -27,12 +27,12 @@ export function CoctailInfoPage(): ReactElement {
                         <div className="ingredients">
                             <ul className="ingredientList">
                                 {focusedCoctail?.ingredients.map((ingredient, index) => (
-                                    <li className="ingredientName" id={`ingredient-${index}`}>{ingredient}</li>
+                                    <li className="ingredientName" key={`ingredient-${index}`} id={`ingredient-${index}`}>{ingredient}</li>
                                 ))}
                             </ul>
                             <ul className="measurementList">
                                 {focusedCoctail?.measures.map((measurement, index) => (
-                                    <li className="measurement" id={`measurement-${index}`}>{measurement}</li>
+                                    <li className="measurement" key={`ingredient-${index}`} id={`measurement-${index}`}>{measurement}</li>
                                 ))}
                             </ul>
                         </div>
