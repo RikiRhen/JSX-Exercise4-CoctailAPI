@@ -1,14 +1,23 @@
-.infoBody{
-    display:flex;
+.infoBody {
+    & .infoDiv {
+        margin-left: 10px;
+    }
+
+    & .coctailImage {
+        max-width: 650px;
+    }
 }
 
-.extraInfo{
-    display:flex;
+.infoBody {
+    display: flex;
+}
+
+.extraInfo {
+    display: flex;
     flex-direction: column;
 }
 
-.ingredients{
-    display:flex;
+.ingredients {
+    display: flex;
     justify-content: space-between;
-    
 }
