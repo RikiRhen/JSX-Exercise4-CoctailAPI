@@ -4,6 +4,7 @@ export interface IDrink {
     glass: string;
     image: string;
     ingredients: string[];
+    measures: string[];
     instructions: string;
     category: string;
     tags: string[];

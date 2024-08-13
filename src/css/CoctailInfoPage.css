@@ -1,0 +1,14 @@
+.infoBody{
+    display:flex;
+}
+
+.extraInfo{
+    display:flex;
+    flex-direction: column;
+}
+
+.ingredients{
+    display:flex;
+    justify-content: space-between;
+    
+}
