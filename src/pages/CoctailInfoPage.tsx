@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import "../css/index.css";
 import { IDrink } from "../interfaces";
 import { useLocation } from "react-router-dom";
+import "../css/index.css";
 
 interface ICoctailInfoPageProps {
     focusedCoctail: IDrink | undefined;

@@ -41,10 +41,6 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
                 throw new Error(`Response status: ${response.status}`);
             }
 
-            // const responseText = await response.text();
-
-            // const data = JSON.parse(responseText);
-
             const data = await response.json();
 
             const coctails: IDrink[] = data.drinks.map((drink: any) => {
