@@ -1,0 +1,30 @@
+.coctailCardDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.coctailCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: black solid 2px;
+    border-radius: 5px;
+
+    & .thumbnail {
+        max-width: 300px;
+    }
+
+    & h2 {
+        border-bottom: black solid 1px;
+    }
+
+    & .link{
+        margin-bottom: 20px;
+    }
+
+    & .infoDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

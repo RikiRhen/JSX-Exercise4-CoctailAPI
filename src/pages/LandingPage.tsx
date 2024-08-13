@@ -1,6 +1,8 @@
 import { MouseEventHandler, ReactElement, useEffect } from "react";
 import { useCoctailLogic, CoctailCard } from "../index";
 
+import "../index";
+
 export function LandingPage(): ReactElement {
     const { getRandomDrink, setFocusedCoctail } = useCoctailLogic();
 
@@ -20,9 +22,9 @@ export function LandingPage(): ReactElement {
 
     return (
         <section className="landingSection">
-            <h1>This is the landing page</h1>
+            <h1>Your randomly chosen coctail is:</h1>
             <CoctailCard />
-            <button className="btn" id="newDrinkButton" onClick={handleOnClick}>New</button>
+            <button className="btn" id="newDrinkButton" onClick={handleOnClick}>Another drink!</button>
         </section>
     )
 }

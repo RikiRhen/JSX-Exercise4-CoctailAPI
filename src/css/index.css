@@ -1,2 +1,5 @@
 @import url("./App.css");
-@import url("CoctailInfoPage.css")
+@import url("./CoctailInfoPage.css");
+@import url("./CoctailCard.css");
+@import url("./LandingPage.css");
+@import url("./SearchPage.css");

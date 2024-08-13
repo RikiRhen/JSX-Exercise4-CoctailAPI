@@ -6,26 +6,26 @@ const MAX_ITEMS_PER_PAGE = 10;
 
 export function SearchPage(): ReactElement {
     const [inputValue, setInputNameValue] = useState<string>("");
-    const [currentPage, setCurrentPage] = useState<number>(1);
     const { getSearchedDrinks, setCoctailList, coctailList } = useCoctailLogic();
-
+    
     const runFetch = async (url: string) => {
         const drinks = await getSearchedDrinks(url);
         const newDrinkList = Array.from(drinks);
         setCoctailList(newDrinkList);
     };
-
+    
     const handleOnSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         const url: string = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`
         runFetch(url);
     }
-
+    
     const handleSearchByNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setInputNameValue(e.target.value);
     }
-
+    
     //Pagination stuff
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const indexOfLastItem = currentPage * MAX_ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - MAX_ITEMS_PER_PAGE;
     const itemsOnPage = coctailList.slice(indexOfFirstItem, indexOfLastItem);
@@ -39,12 +39,10 @@ export function SearchPage(): ReactElement {
     return (
         <>
             <section className="searchSection">
-                <h1>This is the search page</h1>
+                <h1>Find your favourite drink!</h1>
                 <form className="searchForm">
-                    <div className="byNameDiv">
-                        <p>Coctail name:</p>
-                        <input type="text" className="searchByNameInputField" placeholder="Cocktail..." onChange={handleSearchByNameChange} value={inputValue} />
-                    </div>
+                    <p>Coctail name:</p>
+                    <input type="text" className="searchByNameInputField" placeholder="Cocktail..." onChange={handleSearchByNameChange} value={inputValue} />
                     <button className="btn" id="submitSearchButton" onClick={handleOnSubmit}>Search!</button>
                 </form>
             </section>
