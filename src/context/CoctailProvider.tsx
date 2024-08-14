@@ -9,8 +9,8 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
-    const [favourites, setFavourites] = useState<IDrink[]>([]);
     const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
+    const [favourites] = useState<IDrink[]>([]);
 
     function getRandomDrink(): Promise<IDrink> {
         const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
@@ -31,6 +31,24 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
             console.error(`API error fetching searched list: `, error)
             throw error;
         })
+    }
+
+    function toggleFavouriteDrink(favourite: IDrink): number {
+        if (isInFavourites(favourite.name)) {
+            const indexOfFavourite = favourites.indexOf(favourite);
+            favourites.splice(indexOfFavourite, 1);
+            return favourites.length;
+        } else {
+            return favourites.push(favourite);
+        }
+    }
+
+    function isInFavourites(find: string): Boolean {
+        if (favourites.length < 1) {
+            return false;
+        } else {
+            return favourites.some(drink => drink.name === find)
+        }
     }
 
     async function fetchData(url: string): Promise<IDrink[]> {
@@ -82,7 +100,8 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
                     drink.strMeasure15].filter(Boolean),
                     instructions: drink.strInstructions,
                     category: drink.strCategory,
-                    tags: drink.strTags ? drink.strTags.split(",") : []
+                    tags: drink.strTags ? drink.strTags.split(",") : [],
+                    favourite: isInFavourites(drink.strDrink)
                 };
             });
             return coctails;
@@ -101,7 +120,10 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
         setFocusedCoctail,
         setCoctailList,
         focusedCoctail,
-        coctailList
+        coctailList,
+        toggleFavouriteDrink,
+        isInFavourites,
+        favourites
     }
 
     return <CoctailContext.Provider value={values}>{children}</CoctailContext.Provider>

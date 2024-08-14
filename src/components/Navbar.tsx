@@ -9,6 +9,9 @@ export function Navbar(): ReactElement {
                 <Link to="/" className="link">
                     Landing
                 </Link>
+                <Link to="favourites" className="link">
+                    Favourites
+                </Link>
                 <Link to="/search" className="link">
                     Search
                 </Link>

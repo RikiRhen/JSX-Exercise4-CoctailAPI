@@ -1,3 +1,7 @@
+.infoSection {
+    max-width: 1200px;
+}
+
 .infoBody {
     & .infoDiv {
         margin-left: 10px;
@@ -20,4 +24,17 @@
 .ingredients {
     display: flex;
     justify-content: space-between;
+}
+
+.infoDiv .btn {
+    &#isFavourited {
+        background: none;
+        border: none;
+        font-variation-settings: 'FILL' 1;
+    }
+
+    &#isNotFavourited {
+        background: none;
+        border: none;
+    }
 }

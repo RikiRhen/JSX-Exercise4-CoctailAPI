@@ -1,5 +1,6 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { IDrink } from "../interfaces";
+import { useCoctailLogic } from "../index";
 import { useLocation } from "react-router-dom";
 import "../css/index.css";
 
@@ -10,6 +11,20 @@ interface ICoctailInfoPageProps {
 export function CoctailInfoPage(): ReactElement {
     const location = useLocation();
     const { focusedCoctail } = location.state as ICoctailInfoPageProps;
+    const { toggleFavouriteDrink, isInFavourites } = useCoctailLogic();
+    const [isFavourited, setIsFavourited] = useState<Boolean>(isInFavourites(focusedCoctail!.name));
+
+    const handleIsFavClick = () => {
+        toggleFavouriteDrink(focusedCoctail!);
+        // console.log(toggleFavouriteDrink(focusedCoctail!));
+        setIsFavourited(false);
+    }
+
+    const handleIsNotFavClick = () => {
+        toggleFavouriteDrink(focusedCoctail!);
+        // console.log(toggleFavouriteDrink(focusedCoctail!));
+        setIsFavourited(true);
+    }
 
     return (
         <section className="infoSection">
@@ -19,7 +34,14 @@ export function CoctailInfoPage(): ReactElement {
                     <img src={focusedCoctail?.image} alt={focusedCoctail?.name} className="coctailImage" />
                 </div>
                 <div className="infoDiv">
-                    <h1>{focusedCoctail?.name}</h1>
+                    {isFavourited ?
+                        (<button className="btn" id="isFavourited" onClick={handleIsFavClick}><span className="material-symbols-outlined">
+                            heart_check </span></button>) :
+                        (<button className="btn" id="isNotFavourited" onClick={handleIsNotFavClick}><span className="material-symbols-outlined">
+                            heart_plus  </span></button>)}
+                    <div className="titleDiv">
+                        <h1>{focusedCoctail?.name}</h1>
+                    </div>
                     <div className="extraInfo">
                         <p>Served in a {focusedCoctail?.glass}</p>
                         <p>Category: {focusedCoctail?.category}</p>
