@@ -3,20 +3,20 @@ import { IDrink, useCoctailLogic } from "../index";
 import { Link } from "react-router-dom";
 
 interface IFavouriteCardProps {
-    drink: IDrink;
+    focusedCoctail: IDrink;
 }
 
-export function FavouriteCard({ drink }: IFavouriteCardProps): ReactElement {
-    const { focusedCoctail, setFocusedCoctail } = useCoctailLogic();
-    setFocusedCoctail(drink);
+export function FavouriteCard({ focusedCoctail }: IFavouriteCardProps): ReactElement {
+    const { setFocusedCoctail } = useCoctailLogic();
+    setFocusedCoctail(focusedCoctail);
 
     return (
         
         <div className="coctailCardDiv" >
             <div className="coctailCard" >
-                <img className="thumbnail" src={drink.image} alt={drink.name} />
+                <img className="thumbnail" src={focusedCoctail.image} alt={focusedCoctail.name} />
                 <div className="infoDiv" >
-                    <h2 className="randomDrinkName" > {drink.name} </h2>
+                    <h2 className="randomDrinkName" > {focusedCoctail.name} </h2>
                     < Link to="/info" state={{ focusedCoctail }
                     } className="link" >
                         Get to mixin'!
