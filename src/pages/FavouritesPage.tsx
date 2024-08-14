@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { useCoctailLogic, IDrink, FavouriteCard } from "../index";
+import "../index";
 
 
 export function FavouritesPage(): ReactElement{

@@ -1,6 +1,7 @@
 .coctailCardDiv {
     display: flex;
     justify-content: center;
+    margin: 20px;
 }
 
 .coctailCard {
@@ -18,7 +19,7 @@
         border-bottom: black solid 1px;
     }
 
-    & .link{
+    & .link {
         margin-bottom: 20px;
     }
 
