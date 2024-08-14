@@ -9,6 +9,7 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
+    const [favourites, setFavourites] = useState<IDrink[]>([]);
     const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
 
     function getRandomDrink(): Promise<IDrink> {

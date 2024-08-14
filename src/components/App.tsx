@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { CoctailProvider } from "../context/CoctailProvider";
 import { Navbar } from "../index";
 
-import "../css/index.css";
+import "../index";
 
 export function App() {
 
