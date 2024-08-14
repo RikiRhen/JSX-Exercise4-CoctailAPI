@@ -2,7 +2,8 @@ import { ReactElement, useState } from "react";
 import { IDrink } from "../interfaces";
 import { useCoctailLogic } from "../index";
 import { useLocation } from "react-router-dom";
-import "../css/index.css";
+
+import "../index";
 
 interface ICoctailInfoPageProps {
     focusedCoctail: IDrink | undefined;
@@ -16,13 +17,11 @@ export function CoctailInfoPage(): ReactElement {
 
     const handleIsFavClick = () => {
         toggleFavouriteDrink(focusedCoctail!);
-        // console.log(toggleFavouriteDrink(focusedCoctail!));
         setIsFavourited(false);
     }
 
     const handleIsNotFavClick = () => {
         toggleFavouriteDrink(focusedCoctail!);
-        // console.log(toggleFavouriteDrink(focusedCoctail!));
         setIsFavourited(true);
     }
 

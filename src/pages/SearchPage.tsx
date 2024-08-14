@@ -1,29 +1,29 @@
 import { ChangeEventHandler, MouseEventHandler, ReactElement, useState } from "react";
-import { useCoctailLogic } from "../index";
 import { Link } from "react-router-dom";
+import { useCoctailLogic } from "../index";
 
 const MAX_ITEMS_PER_PAGE = 10;
 
 export function SearchPage(): ReactElement {
     const [inputValue, setInputNameValue] = useState<string>("");
     const { getSearchedDrinks, setCoctailList, coctailList } = useCoctailLogic();
-    
+
     const runFetch = async (url: string) => {
         const drinks = await getSearchedDrinks(url);
         const newDrinkList = Array.from(drinks);
         setCoctailList(newDrinkList);
     };
-    
+
     const handleOnSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         const url: string = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`
         runFetch(url);
     }
-    
+
     const handleSearchByNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setInputNameValue(e.target.value);
     }
-    
+
     //Pagination stuff
     const [currentPage, setCurrentPage] = useState<number>(1);
     const indexOfLastItem = currentPage * MAX_ITEMS_PER_PAGE;

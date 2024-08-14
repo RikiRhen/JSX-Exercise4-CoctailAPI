@@ -13,19 +13,9 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
     const [favourites, setFavourites] = useState<IDrink[]>([]);
 
     useEffect(() => {
-        fetch("/favourites.json")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch JSON file - Favourites");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setFavourites(data);
-            })
-            .catch(error => {
-                console.error("Error loading the JSON file: ", error);
-            });
+        const storedData = localStorage.getItem("drinks");
+        let newFavs: IDrink[] = storedData ? JSON.parse(storedData) : [];
+        setFavourites(newFavs);
     }, []);
 
     function getRandomDrink(): Promise<IDrink> {
@@ -51,11 +41,16 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     function toggleFavouriteDrink(favourite: IDrink): number {
         if (isInFavourites(favourite.name)) {
-            const indexOfFavourite = favourites.indexOf(favourite);
+            const indexOfFavourite = favourites.findIndex((fav) => fav.name === favourite.name);
             favourites.splice(indexOfFavourite, 1);
-            return favourites.length;
+            localStorage.clear();
+            localStorage.setItem("drinks", JSON.stringify(favourites))
+            return localStorage.length;
         } else {
-            return favourites.push(favourite);
+            favourites.push(favourite);
+            localStorage.clear();
+            localStorage.setItem("drinks", JSON.stringify(favourites))
+            return localStorage.length;
         }
     }
 
