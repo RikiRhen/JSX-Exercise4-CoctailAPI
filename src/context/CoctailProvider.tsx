@@ -1,4 +1,4 @@
-import { createContext, ReactElement, ReactNode, useState } from "react";
+import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
 import { IDrink, ICoctailContext } from "../interfaces";
 
 interface ICoctailProviderProps {
@@ -10,7 +10,23 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
     const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
-    const [favourites] = useState<IDrink[]>([]);
+    const [favourites, setFavourites] = useState<IDrink[]>([]);
+
+    useEffect(() => {
+        fetch("/favourites.json")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch JSON file - Favourites");
+                }
+                return response.json();
+            })
+            .then(data => {
+                setFavourites(data);
+            })
+            .catch(error => {
+                console.error("Error loading the JSON file: ", error);
+            });
+    }, []);
 
     function getRandomDrink(): Promise<IDrink> {
         const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";

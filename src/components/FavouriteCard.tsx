@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IDrink, useCoctailLogic } from "../index";
+import { IDrink } from "../index";
 import { Link } from "react-router-dom";
 
 interface IFavouriteCardProps {
@@ -7,8 +7,6 @@ interface IFavouriteCardProps {
 }
 
 export function FavouriteCard({ focusedCoctail }: IFavouriteCardProps): ReactElement {
-    const { setFocusedCoctail } = useCoctailLogic();
-    setFocusedCoctail(focusedCoctail);
 
     return (
         
