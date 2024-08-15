@@ -1,5 +1,5 @@
 import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
-import { IDrink, ICoctailContext } from "../index";
+import { IDrink, ICoctailContext, IIngredient } from "../index";
 
 interface ICoctailProviderProps {
     children: ReactNode;
@@ -9,8 +9,9 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
-    const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
     const [favourites, setFavourites] = useState<IDrink[]>([]);
+    const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
+    const [ingredient, setIngredient] = useState<IIngredient>();
 
     useEffect(() => {
         const storedData = localStorage.getItem("drinks");
@@ -59,6 +60,32 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
             return false;
         } else {
             return favourites.some(drink => drink.name === find)
+        }
+    }
+
+    async function fetchIngredient(url: string): Promise<IIngredient | undefined> {
+        try {
+            console.log("Fetching ingredient with url: ", url);
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            const ing = data.ingredients[0];
+
+            const dataIngredient: IIngredient = {
+                name: ing.strIngredient,
+                alcoholic: ing.strAlcohol === "Yes",
+                type: ing.strType,
+                abv: ing.strABV,
+                description: ing.strDescription
+            };
+
+            return dataIngredient;
+        } catch (error) {
+            console.log("fetch went to error")
+            console.error(error);
         }
     }
 
@@ -131,9 +158,12 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
         getRandomDrink,
         getSearchedDrinks,
         fetchData,
+        fetchIngredient,
         setFocusedCoctail,
         setCoctailList,
+        setIngredient,
         focusedCoctail,
+        ingredient,
         coctailList,
         toggleFavouriteDrink,
         isInFavourites,

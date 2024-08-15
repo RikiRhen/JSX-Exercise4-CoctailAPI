@@ -49,15 +49,15 @@ export function SearchPage(): ReactElement {
             <section className="listSection">
 
                 <div className="searchResultDiv">
-                    {(coctailList.length > 1) ? 
+                    {(coctailList.length > 1) ?
                         (<ul className="searchResults">
                             {itemsOnPage.map((focusedCoctail, index) => (
                                 <li className="searchResultDrink" key={`searchDrink-${index}`} id={`searchDrink-${index}`}>
                                     <Link to="/info" state={{ focusedCoctail }} className="link">{focusedCoctail.name}</Link>
                                 </li>
                             ))}
-                        </ul>) : 
-                    (<h1 className="searchResults">No results found</h1>)}  
+                        </ul>) :
+                        (<h1 className="searchResults">No results found</h1>)}
                 </div>
 
                 <div className="paginationDiv">
