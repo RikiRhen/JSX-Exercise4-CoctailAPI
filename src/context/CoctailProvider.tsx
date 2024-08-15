@@ -1,5 +1,5 @@
 import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
-import { IDrink, ICoctailContext } from "../interfaces";
+import { IDrink, ICoctailContext } from "../index";
 
 interface ICoctailProviderProps {
     children: ReactNode;

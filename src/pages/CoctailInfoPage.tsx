@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { IDrink } from "../interfaces";
-import { useCoctailLogic } from "../index";
+import { useCoctailLogic, IDrink } from "../index";
 import { useLocation } from "react-router-dom";
 
 import "../index";

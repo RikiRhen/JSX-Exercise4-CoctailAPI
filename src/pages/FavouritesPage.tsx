@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IDrink, FavouriteCard } from "../index";
+import { IDrink, CoctailCard } from "../index";
 
 import "../index";
 
@@ -17,7 +17,7 @@ export function FavouritesPage(): ReactElement {
                 <div className="favouritesListDiv">
                     {
                         favourites.map((drink: IDrink) => (
-                            <FavouriteCard key={drink.name} focusedCoctail={drink} />
+                            <CoctailCard key={drink.name} focusedCoctail={drink} />
                         ))}
                 </div>
             </section>

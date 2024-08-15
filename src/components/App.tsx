@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { CoctailProvider } from "../context/CoctailProvider";
+import { CoctailProvider } from "../index";
 import { Navbar } from "../index";
 
 import "../index";

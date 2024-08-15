@@ -1,10 +1,11 @@
-import { MouseEventHandler, ReactElement, useEffect } from "react";
-import { useCoctailLogic, CoctailCard } from "../index";
+import { MouseEventHandler, ReactElement, useEffect, useState } from "react";
+import { useCoctailLogic, LoadingCard, CoctailCard } from "../index";
 
 import "../index";
 
 export function LandingPage(): ReactElement {
-    const { getRandomDrink, setFocusedCoctail } = useCoctailLogic();
+    const [isLoading, setIsLoading] = useState(true);
+    const { getRandomDrink, setFocusedCoctail, focusedCoctail } = useCoctailLogic();
 
     const runFetch = async () => {
         const drink = await getRandomDrink();
@@ -17,13 +18,16 @@ export function LandingPage(): ReactElement {
 
     const handleOnClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         runFetch();
     }
 
     return (
         <section className="landingSection">
             <h1>Your randomly chosen coctail is:</h1>
-            <CoctailCard />
+            {isLoading ?
+                (setTimeout(() => { setIsLoading(false); }, 500), <LoadingCard/>) :
+                (<CoctailCard focusedCoctail={focusedCoctail!} />)}
             <button className="btn" id="newDrinkButton" onClick={handleOnClick}>Another drink!</button>
         </section>
     )

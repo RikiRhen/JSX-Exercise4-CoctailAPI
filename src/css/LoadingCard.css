@@ -1,10 +1,10 @@
-.coctailCardDiv {
+.loadingCardDiv {
     display: flex;
     justify-content: center;
     margin: 20px;
 }
 
-.coctailCard {
+.loadingCard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,21 +13,22 @@
     width: 300px;
     height: 406px;
 
-    & .thumbnail {
-        max-width: 300px;
+    & .loadingThumbnail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 300px;
+        background-color: rgba(145, 145, 145, 0.877);
     }
 
     & h2 {
         border-bottom: black solid 1px;
     }
 
-    & .link {
-        margin-bottom: 20px;
-    }
-
     & .infoDiv {
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
 }
