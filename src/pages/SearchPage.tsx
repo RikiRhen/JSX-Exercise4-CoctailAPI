@@ -47,15 +47,19 @@ export function SearchPage(): ReactElement {
                 </form>
             </section>
             <section className="listSection">
+
                 <div className="searchResultDiv">
-                    <ul className="searchResults">
-                        {itemsOnPage.map((focusedCoctail, index) => (
-                            <li className="searchResultDrink" key={`searchDrink-${index}`} id={`searchDrink-${index}`}>
-                                <Link to="/info" state={{ focusedCoctail }} className="link">{focusedCoctail.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                    {(coctailList.length > 1) ? 
+                        (<ul className="searchResults">
+                            {itemsOnPage.map((focusedCoctail, index) => (
+                                <li className="searchResultDrink" key={`searchDrink-${index}`} id={`searchDrink-${index}`}>
+                                    <Link to="/info" state={{ focusedCoctail }} className="link">{focusedCoctail.name}</Link>
+                                </li>
+                            ))}
+                        </ul>) : 
+                    (<h1 className="searchResults">No results found</h1>)}  
                 </div>
+
                 <div className="paginationDiv">
                     {/*This pagination is 100% from chatGPT. No way I could have figured this out on my own. 
                     If I understand it correctly, it just creates sub-arrays that are at most MAX_ITEMS_PER_PAGE long and displays these

@@ -73,6 +73,9 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
             const data = await response.json();
 
+            if (data.drinks === null) {
+                return [];
+            }
             const coctails: IDrink[] = data.drinks.map((drink: any) => {
                 return {
                     name: drink.strDrink,
