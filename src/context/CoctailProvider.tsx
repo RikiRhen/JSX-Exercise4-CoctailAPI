@@ -11,7 +11,7 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
     const [favourites, setFavourites] = useState<IDrink[]>([]);
     const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
-    const [ingredient, setIngredient] = useState<IIngredient>();
+    const [ingredient, setIngredient] = useState<IIngredient>({name:"",abv:"",alcoholic:false,description:"",type:""});
 
     useEffect(() => {
         const storedData = localStorage.getItem("drinks");
@@ -65,7 +65,6 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     async function fetchIngredient(url: string): Promise<IIngredient | undefined> {
         try {
-            console.log("Fetching ingredient with url: ", url);
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);

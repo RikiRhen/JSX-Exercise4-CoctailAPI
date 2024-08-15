@@ -1,11 +1,9 @@
 import { ReactElement, useEffect } from "react";
-import { IIngredient, Ingredient, useCoctailLogic } from "../index";
+import { Ingredient, useCoctailLogic } from "../index";
 import { useLocation } from "react-router-dom";
 
 export function IngredientPage(): ReactElement {
     const { fetchIngredient, setIngredient, ingredient } = useCoctailLogic();
-    let ingr: IIngredient;
-
     const location = useLocation();
     const { ing } = location.state;
 
@@ -19,7 +17,6 @@ export function IngredientPage(): ReactElement {
         runFetch();
     }, []);
 
-    // const { ingredient, coctailList } = useCoctailLogic();
     return (
         <section className="ingredientSection">
             <div className="ingredientDiv">
