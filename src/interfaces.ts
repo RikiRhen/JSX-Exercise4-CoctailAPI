@@ -32,13 +32,13 @@ export interface ICoctailContext {
     getSearchedDrinks: (url: string) => Promise<IDrink[]>;
     getDrinksByIngredient: (url:string) => Promise<IDrinkLite[]>;
     fetchData: (url: string) => Promise<IDrink[]>;
-    fetchIngredient: (url: string) => Promise<IIngredient | undefined>;
+    fetchIngredient: (url: string) => Promise<IIngredient>;
     setFocusedCoctail: (drink: IDrink) => void;
     setCoctailList: (drinks: IDrink[]) => void;
     setCoctailsByIngredientList: (drinks: IDrinkLite[]) => void;
     setIngredient: (ingredient: IIngredient) => void;
     focusedCoctail: IDrink;
-    ingredient: IIngredient | undefined;
+    ingredient: IIngredient;
     coctailList: IDrink[];
     coctailsByIngredientList: IDrinkLite[];
     toggleFavouriteDrink: (favourite: IDrink) => number;
