@@ -10,6 +10,8 @@ export function LandingPage(): ReactElement {
     const runFetch = async () => {
         const drink = await getRandomDrink();
         setFocusedCoctail(drink);
+        localStorage.removeItem("focused");
+        localStorage.setItem("focused", JSON.stringify(focusedCoctail))
     };
 
     useEffect(() => {

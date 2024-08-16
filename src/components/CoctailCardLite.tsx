@@ -14,6 +14,8 @@ export function CoctailCardLite({ drink }: ICoctailCardLiteProps): ReactElement 
         e.preventDefault();
         const newDrink: IDrink = await getDrinkById(drink.id);
         setFocusedCoctail(newDrink);
+        localStorage.removeItem("focused");
+        localStorage.setItem("focused", JSON.stringify(newDrink))
         navigate("/info");
     }
 

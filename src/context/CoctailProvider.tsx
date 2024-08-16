@@ -16,14 +16,18 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     useEffect(() => {
         const storedData = localStorage.getItem("drinks");
+        const oldFocusData = localStorage.getItem("focused");
         let newFavs: IDrink[] = storedData ? JSON.parse(storedData) : [];
+        const oldFocus: IDrink = oldFocusData ? JSON.parse(oldFocusData) : { alcoholic: "", category: "", favourite: false, glass: "", id: "", image: "", ingredients: [], instructions: "", measures: [], name: "", tags: [] };
         setFavourites(newFavs);
+        setFocusedCoctail(oldFocus);
     }, []);
 
     function getRandomDrink(): Promise<IDrink> {
         const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
         return fetchData(url).then((drinks: IDrink[]) => {
             const rando = drinks[0];
+            localStorage.setItem("focused", JSON.stringify(rando))
             return rando;
         }).catch((error) => {
             console.error(`API error fetching drink: `, error);
@@ -67,12 +71,12 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
         if (isInFavourites(favourite.name)) {
             const indexOfFavourite = favourites.findIndex((fav) => fav.name === favourite.name);
             favourites.splice(indexOfFavourite, 1);
-            localStorage.clear();
+            localStorage.removeItem("drinks");
             localStorage.setItem("drinks", JSON.stringify(favourites))
             return localStorage.length;
         } else {
             favourites.push(favourite);
-            localStorage.clear();
+            localStorage.removeItem("drinks");
             localStorage.setItem("drinks", JSON.stringify(favourites))
             return localStorage.length;
         }

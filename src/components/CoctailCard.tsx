@@ -13,6 +13,8 @@ export function CoctailCard({drink}:ICoctailCardProps): ReactElement {
     const handleOnClick: MouseEventHandler<HTMLButtonElement> = async (e) =>{
         e.preventDefault();
         setFocusedCoctail(drink);
+        localStorage.removeItem("focused");
+        localStorage.setItem("focused", JSON.stringify(drink))
         navigate("/info");
     }
 
