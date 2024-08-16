@@ -1,17 +1,11 @@
 import { ReactElement, useState } from "react";
-import { useCoctailLogic, IDrink } from "../index";
-import { Link, useLocation } from "react-router-dom";
+import { useCoctailLogic } from "../index";
+import { Link } from "react-router-dom";
 
 import "../index";
 
-interface ICoctailInfoPageProps {
-    focusedCoctail: IDrink | undefined;
-}
-
 export function CoctailInfoPage(): ReactElement {
-    const location = useLocation();
-    const { toggleFavouriteDrink, isInFavourites } = useCoctailLogic();
-    const { focusedCoctail } = location.state as ICoctailInfoPageProps;
+    const { toggleFavouriteDrink, isInFavourites, focusedCoctail } = useCoctailLogic();
     const [isFavourited, setIsFavourited] = useState<Boolean>(isInFavourites(focusedCoctail!.name));
 
     const handleIsFavClick = () => {

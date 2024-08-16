@@ -1,6 +1,7 @@
 export * from "./components/App";
 export * from "./components/Navbar";
 export * from "./components/CoctailCard";
+export * from "./components/CoctailCardLite";
 export * from "./components/LoadingCard";
 export * from "./components/Ingredient";
 

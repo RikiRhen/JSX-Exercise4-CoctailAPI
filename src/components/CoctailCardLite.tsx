@@ -1,25 +1,25 @@
 import { MouseEventHandler, ReactElement } from "react";
-import { IDrink, useCoctailLogic } from "../index";
+import { IDrink, IDrinkLite, useCoctailLogic } from "../index";
 import { useNavigate } from "react-router-dom";
 
-interface ICoctailCardProps {
-    drink: IDrink;
+interface ICoctailCardLiteProps {
+    drink: IDrinkLite;
 }
 
-export function CoctailCard({drink}:ICoctailCardProps): ReactElement {
-    const { setFocusedCoctail } = useCoctailLogic();
+export function CoctailCardLite({ drink }: ICoctailCardLiteProps): ReactElement {
+    const { setFocusedCoctail, getDrinkById } = useCoctailLogic();
     const navigate = useNavigate();
 
-    const handleOnClick: MouseEventHandler<HTMLButtonElement> = async (e) =>{
+    const handleOnClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
         e.preventDefault();
-        setFocusedCoctail(drink);
+        const newDrink: IDrink = await getDrinkById(drink.id);
+        setFocusedCoctail(newDrink);
         navigate("/info");
     }
 
     return (
-        
-        <div className="coctailCardDiv" >
-            <div className="coctailCard" >
+        <div className="coctailCardLiteDiv" >
+            <div className="coctailCardLite" >
                 <img className="thumbnail" src={drink.image} alt={drink.name} />
                 <div className="infoDiv" >
                     <h2 className="randomDrinkName" > {drink.name} </h2>

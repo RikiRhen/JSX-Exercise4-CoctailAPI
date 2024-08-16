@@ -17,7 +17,7 @@ export function FavouritesPage(): ReactElement {
                 <div className="favouritesListDiv">
                     {
                         favourites.map((drink: IDrink) => (
-                            <CoctailCard key={drink.name} focusedCoctail={drink} />
+                            <CoctailCard key={drink.name} drink={drink} />
                         ))}
                 </div>
             </section>

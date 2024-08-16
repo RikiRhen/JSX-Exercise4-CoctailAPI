@@ -1,0 +1,8 @@
+.ingredientSection {
+    max-width: 1200px;
+}
+
+.listHeadline {
+    display: flex;
+    justify-content: center;
+}

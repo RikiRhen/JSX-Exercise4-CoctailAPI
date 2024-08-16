@@ -1,5 +1,5 @@
 import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
-import { IDrink, ICoctailContext, IIngredient } from "../index";
+import { IDrink, ICoctailContext, IIngredient, IDrinkLite } from "../index";
 
 interface ICoctailProviderProps {
     children: ReactNode;
@@ -9,9 +9,10 @@ export const CoctailContext = createContext<ICoctailContext>({} as ICoctailConte
 
 export function CoctailProvider({ children }: ICoctailProviderProps): ReactElement {
     const [coctailList, setCoctailList] = useState<IDrink[]>([]);
+    const [coctailsByIngredientList, setCoctailsByIngredientList] = useState<IDrinkLite[]>([]);
     const [favourites, setFavourites] = useState<IDrink[]>([]);
-    const [focusedCoctail, setFocusedCoctail] = useState<IDrink>();
-    const [ingredient, setIngredient] = useState<IIngredient>({name:"",abv:"",alcoholic:false,description:"",type:""});
+    const [focusedCoctail, setFocusedCoctail] = useState<IDrink>({alcoholic:"",category:"",favourite:false,glass:"",id:"",image:"",ingredients:[],instructions:"",measures:[],name:"",tags:[]});
+    const [ingredient, setIngredient] = useState<IIngredient>({ name: "", abv: "", alcoholic: "", description: "", type: "" });
 
     useEffect(() => {
         const storedData = localStorage.getItem("drinks");
@@ -30,12 +31,34 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
         });
     }
 
+    function getDrinkById(id:string): Promise<IDrink> {
+        const url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i="+id;
+        console.log("running drinkById with url: ", url)
+        return fetchData(url).then((drinks: IDrink[]) => {
+            const rando = drinks[0];
+            return rando;
+        }).catch((error) => {
+            console.error(`API error fetching drink: `, error);
+            throw error;
+        });
+    }
+
     function getSearchedDrinks(url: string): Promise<IDrink[]> {
         return fetchData(url).then((drinks: IDrink[]) => {
             const drinkList: IDrink[] = Array.from(drinks);
             return drinkList;
         }).catch((error) => {
             console.error(`API error fetching searched list: `, error)
+            throw error;
+        })
+    }
+
+    function getDrinksByIngredient(url: string): Promise<IDrinkLite[]> {
+        return fetchDrinksByIngredient(url).then((drinks: IDrinkLite[]) => {
+            const drinkList: IDrinkLite[] = Array.from(drinks);
+            return drinkList;
+        }).catch((error) => {
+            console.error(`API error fetching searched by ingredient list: `, error)
             throw error;
         })
     }
@@ -63,6 +86,33 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
         }
     }
 
+    async function fetchDrinksByIngredient(url: string): Promise<IDrinkLite[]> {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`)
+            }
+            const data = await response.json();
+            if (data.drinks === null) {
+                return [];
+            }
+            const coctails: IDrinkLite[] = data.drinks.map((drink: any) => {
+                return {
+                    name: drink.strDrink,
+                    id: drink.idDrink,
+                    image: drink.strDrinkThumb
+                };
+            });
+            return coctails;
+        }
+        catch (error) {
+            console.log("fetch went to error")
+            console.error(error);
+            return [];
+        }
+    }
+
+
     async function fetchIngredient(url: string): Promise<IIngredient | undefined> {
         try {
             const response = await fetch(url);
@@ -75,7 +125,7 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
             const dataIngredient: IIngredient = {
                 name: ing.strIngredient,
-                alcoholic: ing.strAlcohol === "Yes",
+                alcoholic: ing.strAlcohol,
                 type: ing.strType,
                 abv: ing.strABV,
                 description: ing.strDescription
@@ -90,22 +140,19 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     async function fetchData(url: string): Promise<IDrink[]> {
         try {
-
             const response = await fetch(url);
-
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-
             const data = await response.json();
-
             if (data.drinks === null) {
                 return [];
             }
             const coctails: IDrink[] = data.drinks.map((drink: any) => {
                 return {
+                    id: drink.idDrink,
                     name: drink.strDrink,
-                    alcoholic: drink.strAlcoholic === "Alcoholic",
+                    alcoholic: drink.strAlcoholic,
                     glass: drink.strGlass,
                     image: drink.strDrinkThumb,
                     ingredients: [drink.strIngredient1,
@@ -155,15 +202,19 @@ export function CoctailProvider({ children }: ICoctailProviderProps): ReactEleme
 
     const values: ICoctailContext = {
         getRandomDrink,
+        getDrinkById,
         getSearchedDrinks,
+        getDrinksByIngredient,
         fetchData,
         fetchIngredient,
         setFocusedCoctail,
         setCoctailList,
+        setCoctailsByIngredientList,
         setIngredient,
         focusedCoctail,
         ingredient,
         coctailList,
+        coctailsByIngredientList,
         toggleFavouriteDrink,
         isInFavourites,
         favourites

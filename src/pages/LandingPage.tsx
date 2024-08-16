@@ -27,7 +27,7 @@ export function LandingPage(): ReactElement {
             <h1>Your randomly chosen coctail is:</h1>
             {isLoading ?
                 (setTimeout(() => { setIsLoading(false); }, 500), <LoadingCard/>) :
-                (<CoctailCard focusedCoctail={focusedCoctail!} />)}
+                (<CoctailCard drink={focusedCoctail}/>)}
             <button className="btn" id="newDrinkButton" onClick={handleOnClick}>Another drink!</button>
         </section>
     )
